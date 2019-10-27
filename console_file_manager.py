@@ -1,3 +1,5 @@
+import filemanager as fm
+
 """
     Домашнее задание для 6 урока.
     Реализация консольного файлового менеджера
@@ -30,16 +32,16 @@ def console_file_manager():
         # вызвать соответствующую функцию
 
         # Создать папку
-        if i_command == 1 :
-            create_folder()
+        if i_command == 1:
+            fm.create_folder()
         # Удалить папку
-        elif i_command == 2 :
-            delete_folder()
-        # Сопировать папку
-        elif i_command == 3 :
-            copy_folder()
+        elif i_command == 2:
+            fm.delete_folder()
+        # Скопировать папку
+        elif i_command == 3:
+            fm.copy_folder()
         # Вывести содержимое папки на экран
-        elif i_command == 4 :
+        elif i_command == 4:
             list_directory()
         # Вывести на экран список папок из папки
         elif i_command == 5 :

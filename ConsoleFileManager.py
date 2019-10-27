@@ -18,11 +18,61 @@ def print_header():
     print("10 - Мой банковский счет")
     print("11 - Смена рабочей директории")
     print("12 - Выход")
-    return input("Выберите пункт меню :")
+    return int(input("Выберите пункт меню :"))
 
-#def console_file_manager():
+def console_file_manager():
 
-print_header()
+    while True :
+        # Вывод меню и обработка пользовательского ввода
+        i_command = print_header()
+
+        # В зависимости от того, какой пункт меню был выбран пользователем
+        # вызвать соответствующую функцию
+
+        # Создать папку
+        if i_command == 1 :
+            create_folder()
+        # Удалить папку
+        elif i_command == 2 :
+            delete_folder()
+        # Сопировать папку
+        elif i_command == 3 :
+            copy_folder()
+        # Вывести содержимое папки на экран
+        elif i_command == 4 :
+            list_directory()
+        # Вывести на экран список папок из папки
+        elif i_command == 5 :
+            list_only_folders()
+        # Вывести на экран список файлов из папки
+        elif i_command == 6 :
+            list_only_files()
+        # Вывести на экран информацию об операционной системе
+        elif i_command == 7 :
+            list_os_config()
+        # Запустить создателя программ
+        elif i_command == 8 :
+            programm_creater()
+        # Запустить викторину
+        elif i_command == 9 :
+            ply_quiz()
+        # Запустить приложение "мой счет в банке"
+        elif i_command == 10 :
+            my_bank_account
+        # Изменить текущий каталог
+        elif i_command == 11 :
+            change_current_directory()
+        # Выйти из программы
+        elif i_command == 12 :
+            break
+
+
+if __name__ == "__main__" :
+
+    console_file_manager()
+
+
+
 
 
 

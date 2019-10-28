@@ -1,4 +1,5 @@
 import filemanager as fm
+import bank_account as ba
 
 """
     Домашнее задание для 6 урока.
@@ -42,25 +43,25 @@ def console_file_manager():
             fm.copy_folder()
         # Вывести содержимое папки на экран
         elif i_command == 4:
-            list_directory()
+            fm.list_directory("all")
         # Вывести на экран список папок из папки
         elif i_command == 5 :
-            list_only_folders()
+            fm.list_directory("folder")
         # Вывести на экран список файлов из папки
         elif i_command == 6 :
-            list_only_files()
+            fm.list_directory("file")
         # Вывести на экран информацию об операционной системе
         elif i_command == 7 :
-            list_os_config()
+            fm.list_os_config()
         # Запустить создателя программ
         elif i_command == 8 :
-            programm_creater()
+            fm.program_creator()
         # Запустить викторину
         elif i_command == 9 :
-            ply_quiz()
+            play_quiz()
         # Запустить приложение "мой счет в банке"
         elif i_command == 10 :
-            my_bank_account
+            fm.bank_account()
         # Изменить текущий каталог
         elif i_command == 11 :
             change_current_directory()

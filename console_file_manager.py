@@ -1,5 +1,6 @@
 import filemanager as fm
 import bank_account as ba
+import quiz as qz
 
 """
     Домашнее задание для 6 урока.
@@ -58,13 +59,13 @@ def console_file_manager():
             fm.program_creator()
         # Запустить викторину
         elif i_command == 9 :
-            play_quiz()
+            qz.quiz()
         # Запустить приложение "мой счет в банке"
         elif i_command == 10 :
             fm.bank_account()
         # Изменить текущий каталог
         elif i_command == 11 :
-            change_current_directory()
+            fm.change_current_directory()
         # Выйти из программы
         elif i_command == 12 :
             break

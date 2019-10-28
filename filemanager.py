@@ -102,3 +102,12 @@ def program_creator():
     s_file_name = input("Введите имя файла программы:")
     uid = os.stat(s_file_name).st_uid
     print(f"Создатель программы: {pwd.getpwuid(uid).pw_name}")
+
+
+def change_current_directory():
+    s_path = input("Введите новый рабочий каталог:")
+    try:
+        os.chdir(s_path)
+        print("Рабочий каталог был успешно изменен.")
+    except OSError:
+        print("Can't change the Current Working Directory")

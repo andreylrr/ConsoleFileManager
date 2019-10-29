@@ -53,7 +53,7 @@ def console_file_manager():
             fm.list_directory("file")
         # Вывести на экран информацию об операционной системе
         elif i_command == 7 :
-            fm.list_os_config()
+            fm.list_config()
         # Запустить создателя программ
         elif i_command == 8 :
             fm.program_creator()
@@ -62,7 +62,7 @@ def console_file_manager():
             qz.quiz()
         # Запустить приложение "мой счет в банке"
         elif i_command == 10 :
-            fm.bank_account()
+            ba.bank_account()
         # Изменить текущий каталог
         elif i_command == 11 :
             fm.change_current_directory()
@@ -72,7 +72,6 @@ def console_file_manager():
 
 
 if __name__ == "__main__" :
-
     console_file_manager()
 
 

@@ -21,17 +21,17 @@ def create_folder():
     try:
         os.mkdir(create_path(os.getcwd(), s_folder_name))
     except OSError:
-        print(f"The folder {s_folder_name} can't be created in {os.getcwd()}")
+        print(f"Папка: {s_folder_name} не может быть создана в {os.getcwd()}")
     else:
-        print(f"The folder {s_folder_name} was successfully created in {os.getcwd()}")
+        print(f"Папка: {s_folder_name} создана в {os.getcwd()}")
 
 def delete_folder():
     s_folder_name = input("Введите название папки:")
     s_current_folder = os.getcwd()
     s_path = create_path(s_current_folder, s_folder_name)
 
-    if not os._exists(s_path):
-        print(f"The path: {s_path} doesn't exist in the current folder: {s_current_folder}.")
+    if not os.path.exists(s_path):
+        print(f"Папка: {s_folder_name} не существует в текущем каталоге: {s_current_folder}.")
         return
 
     if os.path.isfile(s_current_folder+s_folder_name):
@@ -40,29 +40,28 @@ def delete_folder():
         try:
             sh.rmtree(s_path)
         except OSError as e:
-            print(f"Error during removing the folder: {s_path} : {e.strerror}")
+            print(f"Возникла ошиька при копировании папки: {s_path} : {e.strerror}")
 
-    print(f"The entered {s_folder_name} was removed successfully.")
+    print(f"Папка: {s_folder_name} была успешно удалена.")
 
 
 def copy_folder():
     s_old_folder_name = input("Введите название начальной папки/файла:")
     s_new_folder_name = input("Введите название конечной папки/файла:")
 
-    if not os._exists(s_old_folder_name):
-        print(f"The path: {s_old_folder_name} doesn't exist.")
+    if not os.path.exists(s_old_folder_name):
+        print(f"Путь: {s_old_folder_name} не существует.")
         return
 
     if os.path.isfile(s_old_folder_name):
         sh.copyfile(s_old_folder_name, s_new_folder_name)
+        print(f"Файл: {s_old_folder_name} успшено скопирован в: {s_new_folder_name}.")
     else:
         try:
             sh.copytree(s_old_folder_name, s_new_folder_name)
         except OSError as e:
-            print(f"Error during coping the folder: {s_old_folder_name} : {e.strerror}")
-        print(f"The entered {s_old_folder_name} was copied successfully to {s_new_folder_name}.")
-
-    print(f"The entered: {s_old_folder_name} was copied to: {s_new_folder_name}.")
+            print(f"Возникла ошибка при копировании папки: {s_old_folder_name} : {e.strerror}")
+        print(f"Каталог/файл : {s_old_folder_name} был скопирован успешно в: {s_new_folder_name}.")
 
 
 """
@@ -70,28 +69,28 @@ def copy_folder():
 """
 def list_directory(output_type):
     if output_type == "all":
-        map(print, os.listdir(os.getcwd()))
+        print(os.listdir(os.getcwd()))
     elif output_type == "file":
-        map(print, [x for x in os.listdir((os.getcwd())) if os.path.isfile(x)])
+        print([x for x in os.listdir((os.getcwd())) if os.path.isfile(x)])
     elif output_type == "folder":
-        map(print, [x for x in os.listdir((os.getcwd())) if not os.path.isfile(x)])
+        print([x for x in os.listdir((os.getcwd())) if not os.path.isfile(x)])
 
 
 def list_config():
-    print("Architecture: " + pl.architecture()[0])
-    print("Machine: " + pl.machine())
-    print("Node: " + pl.node())
-    print("Processors: ")
+    print("Архитектура: " + pl.architecture()[0])
+    print("Машина: " + pl.machine())
+    print("Узел: " + pl.node())
+    print("Процессоры: ")
     with open("/proc/cpuinfo", "r")  as f:
         info = f.readlines()
     cpuinfo = [x.strip().split(":")[1] for x in info if "model name" in x]
     for index, item in enumerate(cpuinfo):
         print("    " + str(index) + ": " + item)
-    print("System: " + pl.system())
+    print("Система: " + pl.system())
     dist = pl.dist()
     dist = " ".join(x for x in dist)
-    print("Distribution: " + dist)
-    print("Memory Info: ")
+    print("Дистрибуция: " + dist)
+    print("Память: ")
     with open("/proc/meminfo", "r") as f:
         lines = f.readlines()
     print("     " + lines[0].strip())
@@ -110,4 +109,4 @@ def change_current_directory():
         os.chdir(s_path)
         print("Рабочий каталог был успешно изменен.")
     except OSError:
-        print("Can't change the Current Working Directory")
+        print("Текущий рабочий каталог не может быть изменен.")

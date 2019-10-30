@@ -6,11 +6,14 @@ import pwd
 """
     Создание нового пути на основе двух 
 """
-def create_path(folder1, folder2):
-    if folder1[-1] != "/" and folder2[0] != "/" :
-       s_path = folder1 + "/" + folder2
+def create_path(folder):
+    if folder[0] != "/":
+        if os.getcwd()[-1] != "/":
+            s_path = os.getcwd() + "/" + folder
+        else:
+            s_path = os.getcwd() + folder
     else:
-       s_path = folder1 + folder2
+        s_path = folder
     return s_path
 
 
@@ -18,45 +21,43 @@ def create_path(folder1, folder2):
      Функция создания каталога в текущем каталоге
 """
 def create_folder():
-    s_folder_name = input("Введите название папки:")
+    s_folder_name = create_path(input("Введите название папки:"))
     try:
-        os.mkdir(create_path(os.getcwd(), s_folder_name))
+        os.mkdir(s_folder_name)
     except OSError:
-        print(f"Папка: {s_folder_name} не может быть создана в {os.getcwd()}")
+        print(f"Папка: {s_folder_name} не может быть создана.")
     else:
-        print(f"Папка: {s_folder_name} создана в {os.getcwd()}")
-
+        print(f"Папка: {s_folder_name} успешно создана.")
 
 
 """
     Функция удаления каталога
 """
 def delete_folder():
-    s_folder_name = input("Введите название папки:")
-    s_current_folder = os.getcwd()
-    s_path = create_path(s_current_folder, s_folder_name)
+    s_folder_name = input("Введите название папки/файла:")
+    s_path = create_path(s_folder_name)
 
     if not os.path.exists(s_path):
-        print(f"Папка: {s_folder_name} не существует в текущем каталоге: {s_current_folder}.")
+        print(f"Файл/папка: {s_folder_name} не существует.")
         return
 
-    if os.path.isfile(s_current_folder+s_folder_name):
+    if os.path.isfile(s_path):
         os.remove(s_path)
+        print(f"Файл: {s_folder_name} успешно удален.")
     else:
         try:
             sh.rmtree(s_path)
         except OSError as e:
             print(f"Возникла ошиька при копировании папки: {s_path} : {e.strerror}")
-
-    print(f"Папка: {s_folder_name} была успешно удалена.")
+        print(f"Папка: {s_folder_name} была успешно удалена.")
 
 
 """
     Функция копирования каталога/файла
 """
 def copy_folder():
-    s_old_folder_name = input("Введите название начальной папки/файла:")
-    s_new_folder_name = input("Введите название конечной папки/файла:")
+    s_old_folder_name = create_path(input("Введите название начальной папки/файла:"))
+    s_new_folder_name = create_path(input("Введите название конечной папки/файла:"))
 
     if not os.path.exists(s_old_folder_name):
         print(f"Путь: {s_old_folder_name} не существует.")
@@ -118,12 +119,11 @@ def program_creator():
     print(f"Создатель программы: {pwd.getpwuid(uid).pw_name}")
 
 
-
 """
     Функция изменения текущего рабочего каталога
 """
 def change_current_directory():
-    s_path = input("Введите новый рабочий каталог:")
+    s_path = create_path(input("Введите новый рабочий каталог:"))
     try:
         os.chdir(s_path)
         print("Рабочий каталог был успешно изменен.")

@@ -13,6 +13,7 @@ def create_path(folder1, folder2):
        s_path = folder1 + folder2
     return s_path
 
+
 """
      Функция создания каталога в текущем каталоге
 """
@@ -25,6 +26,11 @@ def create_folder():
     else:
         print(f"Папка: {s_folder_name} создана в {os.getcwd()}")
 
+
+
+"""
+    Функция удаления каталога
+"""
 def delete_folder():
     s_folder_name = input("Введите название папки:")
     s_current_folder = os.getcwd()
@@ -45,6 +51,9 @@ def delete_folder():
     print(f"Папка: {s_folder_name} была успешно удалена.")
 
 
+"""
+    Функция копирования каталога/файла
+"""
 def copy_folder():
     s_old_folder_name = input("Введите название начальной папки/файла:")
     s_new_folder_name = input("Введите название конечной папки/файла:")
@@ -76,6 +85,9 @@ def list_directory(output_type):
         print([x for x in os.listdir((os.getcwd())) if not os.path.isfile(x)])
 
 
+"""
+    Функция выода информации о системе
+"""
 def list_config():
     print("Архитектура: " + pl.architecture()[0])
     print("Машина: " + pl.machine())
@@ -97,12 +109,19 @@ def list_config():
     print("     " + lines[1].strip())
 
 
+"""
+    Функция вывода имени создателя файла
+"""
 def program_creator():
     s_file_name = input("Введите имя файла программы:")
     uid = os.stat(s_file_name).st_uid
     print(f"Создатель программы: {pwd.getpwuid(uid).pw_name}")
 
 
+
+"""
+    Функция изменения текущего рабочего каталога
+"""
 def change_current_directory():
     s_path = input("Введите новый рабочий каталог:")
     try:

@@ -1,7 +1,7 @@
 import os
 import shutil as sh
 import platform as pl
-import pwd
+#import pwd
 
 """
     Создание нового пути на основе двух 

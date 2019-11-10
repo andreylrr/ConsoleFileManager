@@ -1,7 +1,7 @@
 import os
 import shutil as sh
 import platform as pl
-#import pwd
+import json
 
 """
     Создание нового пути на основе двух 
@@ -129,3 +129,28 @@ def change_current_directory():
         print("Рабочий каталог был успешно изменен.")
     except OSError:
         print("Текущий рабочий каталог не может быть изменен.")
+
+"""
+    Функция сохранения содержимого каталога
+"""
+def save_current_directory():
+    s_file = "listdir.txt"
+    with open(s_file, "w") as f:
+        l_files = get_files_from_current()
+        l_dir = get_dirs_from_current()
+        d_dict = {"files": l_files, "dirs": l_dir}
+        json.dump(d_dict, f)
+    print("Содержимое текущего каталога было сохранено в файле.")
+
+"""
+    Функция получить список файлов из текущего каталога
+"""
+def get_files_from_current():
+    return [x for x in os.listdir((os.getcwd())) if os.path.isfile(x)]
+
+
+"""
+    Функция получить список каталогов из текущего каталога
+"""
+def get_dirs_from_current():
+    return [x for x in os.listdir((os.getcwd())) if not os.path.isfile(x)]

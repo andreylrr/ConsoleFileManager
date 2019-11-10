@@ -1,3 +1,5 @@
+import json as js
+import os
 
 """
    Функция пополнения счета
@@ -39,10 +41,22 @@ def print_history(history):
         print(s_element_history)
     return
 
-def bank_account():
 
-    account = 0
-    history = []
+"""
+   Главная функция приложения bank_account
+"""
+def bank_account():
+    s_file_name = "bankaccount.json"
+    # Проверить наличие файла с сохраненными данными и загрузить его если он сущеуствует
+    if os.path.exists(s_file_name):
+        with open(s_file_name,"r") as f:
+            l_archive = js.load(f)
+            account = l_archive[0]
+            history = l_archive[1]
+    else:
+        account = 0
+        history = []
+
     while True:
         print('1. пополнение счета')
         print('2. покупка')
@@ -57,6 +71,13 @@ def bank_account():
         elif choice == '3':
             print_history(history)
         elif choice == '4':
+            with open(s_file_name, "w") as f:
+                l_archive = [account, history]
+                js.dump(l_archive,f)
             break
         else:
             print('Неверный пункт меню')
+
+
+if __name__ == "__main__":
+    bank_account()

@@ -1,6 +1,7 @@
 import bank_account as ba
 import filemanager as fm
 import os
+import json
 
 """
    Тесты для функции refill из программы bank_account
@@ -137,3 +138,45 @@ def test_delete_folder(monkeypatch):
     assert l_test_print[0] == "Папка: /home/ была успешно удалена."
     assert l_test_print[1] == f"Папка: test была успешно удалена."
     assert l_test_print[2] == f"Папка: 1 была успешно удалена."
+
+"""
+    Тест для функции получения списка файлов из текущего каталога
+"""
+def test_get_files_from_current(monkeypatch):
+    def mock_list_files(x):
+       return ["bank_account.py", "file_manager.py", "quiz.py", "test_filemanager.py"]
+    def mock_isfile(x):
+       return True
+    monkeypatch.setattr(os, 'listdir', mock_list_files)
+    monkeypatch.setattr(os.path, 'isfile', mock_isfile)
+    assert fm.get_files_from_current() == ["bank_account.py", "file_manager.py", "quiz.py", "test_filemanager.py"]
+
+
+"""
+    Тест для функции получения списка каталогов из текущего каталога
+"""
+def test_get_dirs_from_current(monkeypatch):
+    def mock_list_dirs(x):
+       return [".git", ".idea", "pytest_cache", "home"]
+    def mock_isfile(x):
+       return False
+    monkeypatch.setattr(os, 'listdir', mock_list_dirs)
+    monkeypatch.setattr(os.path, 'isfile', mock_isfile)
+    assert fm.get_dirs_from_current() == [".git", ".idea", "pytest_cache", "home"]
+
+
+ """
+     Тест для сохранения текушего каталога
+ """
+def test_save_current_directory(monkeypatch):
+    def mock_get_files():
+       return ["bank_account.py", "file_manager.py", "quiz.py", "test_filemanager.py"]
+    def mock_get_dirs():
+       return [".git", ".idea", "pytest_cache", "home"]
+    monkeypatch.setattr(fm, 'get_files_from_current', mock_get_files)
+    monkeypatch.setattr(fm, 'get_dirs_from_current', mock_get_dirs)
+    fm.save_current_directory()
+    with open("listdir.txt","r") as f:
+        d_dict = json.load(f)
+    assert d_dict["files"] == ["bank_account.py", "file_manager.py", "quiz.py", "test_filemanager.py"]
+    assert d_dict["dirs"] == [".git", ".idea", "pytest_cache", "home"]

@@ -21,7 +21,8 @@ def print_header():
     print("9  - Играть в викторину")
     print("10 - Мой банковский счет")
     print("11 - Смена рабочей директории")
-    print("12 - Выход")
+    print("12 - Сохранение содержимого рабочей директории в файл")
+    print("13 - Выход")
     return int(input("Выберите пункт меню :"))
 
 def console_file_manager():
@@ -46,28 +47,31 @@ def console_file_manager():
         elif i_command == 4:
             fm.list_directory("all")
         # Вывести на экран список папок из папки
-        elif i_command == 5 :
+        elif i_command == 5:
             fm.list_directory("folder")
         # Вывести на экран список файлов из папки
-        elif i_command == 6 :
+        elif i_command == 6:
             fm.list_directory("file")
         # Вывести на экран информацию об операционной системе
-        elif i_command == 7 :
+        elif i_command == 7:
             fm.list_config()
         # Запустить создателя программ
-        elif i_command == 8 :
+        elif i_command == 8:
             fm.program_creator()
         # Запустить викторину
-        elif i_command == 9 :
+        elif i_command == 9:
             qz.quiz()
         # Запустить приложение "мой счет в банке"
-        elif i_command == 10 :
+        elif i_command == 10:
             ba.bank_account()
         # Изменить текущий каталог
-        elif i_command == 11 :
+        elif i_command == 11:
             fm.change_current_directory()
+        # Сохранение содержимого текущего каталога
+        elif i_command == 12:
+            fm.save_current_directory()
         # Выйти из программы
-        elif i_command == 12 :
+        elif i_command == 13:
             break
 
 

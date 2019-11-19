@@ -8,10 +8,8 @@ import json
 """
 def create_path(folder):
     if folder[0] != "/":
-        if os.getcwd()[-1] != "/":
-            s_path = os.getcwd() + "/" + folder
-        else:
-            s_path = os.getcwd() + folder
+        s_path = os.getcwd()
+        s_path += "/" + folder if os.getcwd()[-1] != "/" else folder
     else:
         s_path = folder
     return s_path
@@ -48,7 +46,7 @@ def delete_folder():
         try:
             sh.rmtree(s_path)
         except OSError as e:
-            print(f"Возникла ошиька при копировании папки: {s_path} : {e.strerror}")
+            print(f"Возникла ошибка при копировании папки: {s_path} : {e.strerror}")
         print(f"Папка: {s_folder_name} была успешно удалена.")
 
 
@@ -115,7 +113,11 @@ def list_config():
 """
 def program_creator():
     s_file_name = input("Введите имя файла программы:")
-    uid = os.stat(s_file_name).st_uid
+    try:
+        uid = os.stat(s_file_name).st_uid
+    except OSError as ex:
+        print (f"Произошла ошибка при открытии файла {s_file_name}.")
+        return
     print(f"Создатель программы: {pwd.getpwuid(uid).pw_name}")
 
 

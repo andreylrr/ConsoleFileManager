@@ -8,7 +8,12 @@ import os
    history - История работы со счетом
 """
 def refill(account, history):
-    i_refill_amount = int(input("Введите сумму пополнения счета: "))
+    try:
+        i_refill_amount = int(input("Введите сумму пополнения счета: "))
+    except ValueError as ex:
+        print(f"Неверная сумма пополнения счета.")
+        history.append("Неверная сумма пополнения счета.")
+        return account, history
     history.append(f"Счет пополнен на {i_refill_amount} рублей.")
     print(f"Счет пополнен на {i_refill_amount} рублей.")
     return account + i_refill_amount, history
@@ -20,7 +25,16 @@ def refill(account, history):
    history - История работы со счетом
 """
 def purchase(account, history):
-    i_purchase_amount = int(input("Введите сумму покупки: "))
+    s_purchase_amount = input("Введите сумму покупки: ")
+    # Здесь в качестве практики обработка неправильного ввода
+    # сделана с использованием функции isdigit, хотя может быть
+    # использован механизм обработки исключений
+    if s_purchase_amount.isdigit():
+        i_purchase_amount = int(s_purchase_amount)
+    else:
+        print(f'Сумма покупки введена неверно.')
+        history.append(f"Сумма покупки введена неверно.")
+        return account, history
     if account - i_purchase_amount < 0:
         print("На вашем счету недостаточно средств для осуществления покупки.")
         return account, history

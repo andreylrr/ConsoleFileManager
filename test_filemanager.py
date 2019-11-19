@@ -23,10 +23,13 @@ def test_refill_account_multiple_entries(monkeypatch):
     test_account, l_test_history = ba.refill(test_account, l_test_history)
     monkeypatch.setattr('builtins.input', lambda x: "-20")
     test_account, l_test_history = ba.refill(test_account, l_test_history)
+    monkeypatch.setattr('builtins.input', lambda x: "-20a")
+    test_account, l_test_history = ba.refill(test_account, l_test_history)
     assert test_account == 180
     assert l_test_history[0] == "Счет пополнен на 50 рублей."
     assert l_test_history[1] == "Счет пополнен на 150 рублей."
     assert l_test_history[2] == "Счет пополнен на -20 рублей."
+    assert l_test_history[3] == "Неверная сумма пополнения счета."
 
 
 """
@@ -55,10 +58,13 @@ def test_purchase_multiple(monkeypatch):
     test_account, l_test_history = ba.purchase(test_account, l_test_history)
     l_input_data = ["50", "Куртка"]
     test_account, l_test_history = ba.purchase(test_account, l_test_history)
+    l_input_data = ["50x", "Куртка"]
+    test_account, l_test_history = ba.purchase(test_account, l_test_history)
     assert l_test_print[0] == "Покупка успешно совершена. На счету осталось 150."
     assert test_account == 100
     assert l_test_history[0] == f"Совершена покупка \"Обувь\" на сумму 50."
     assert l_test_history[1] == f"Совершена покупка \"Куртка\" на сумму 50."
+    assert l_test_history[2] == f"Сумма покупки введена неверно."
 
 def test_purchase_negative(monkeypatch):
     l_test_print = []
@@ -165,9 +171,9 @@ def test_get_dirs_from_current(monkeypatch):
     assert fm.get_dirs_from_current() == [".git", ".idea", "pytest_cache", "home"]
 
 
- """
+"""
      Тест для сохранения текушего каталога
- """
+"""
 def test_save_current_directory(monkeypatch):
     def mock_get_files():
        return ["bank_account.py", "file_manager.py", "quiz.py", "test_filemanager.py"]
